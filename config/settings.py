@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "djoser",
     "drf_spectacular",
+    "minio_storage",
     "rest_framework",
     "rest_framework_simplejwt",
 ]
@@ -138,10 +139,34 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) & Media storage configuration
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATICFILES_STORAGE = "minio_storage.storage.MinioStaticStorage"
+DEFAULT_FILE_STORAGE = "minio_storage.storage.MinioMediaStorage"
+
+
+MINIO_STORAGE_ENDPOINT = env.str("MINIO_STORAGE_ENDPOINT")
+MINIO_STORAGE_USE_HTTPS = env.bool("MINIO_STORAGE_USE_HTTPS")
+
+MINIO_STORAGE_ACCESS_KEY = env.str("MINIO_ROOT_USER")
+MINIO_STORAGE_SECRET_KEY = env.str("MINIO_ROOT_PASSWORD")
+
+MINIO_STORAGE_MEDIA_BUCKET_NAME = env.str("MINIO_STORAGE_MEDIA_BUCKET_NAME")
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = env.bool("MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET", False)
+MINIO_STORAGE_MEDIA_BACKUP_BUCKET = env.str("MINIO_STORAGE_MEDIA_BACKUP_BUCKET", "Recycle bin")
+MINIO_STORAGE_MEDIA_BACKUP_FORMAT = "%Y-%m-%d_%H-%M-%S_"
+
+MINIO_STORAGE_STATIC_BUCKET_NAME = env.str("MINIO_STORAGE_STATIC_BUCKET_NAME")
+MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET = env.bool("MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET", False)
+
+PROTOCOL = "https" if MINIO_STORAGE_USE_HTTPS else "http"
+
+MINIO_STORAGE_MEDIA_URL = f"{PROTOCOL}://{MINIO_STORAGE_ENDPOINT}/{MINIO_STORAGE_MEDIA_BUCKET_NAME}/"
+MINIO_STORAGE_STATIC_URL = f"{PROTOCOL}://{MINIO_STORAGE_ENDPOINT}/{MINIO_STORAGE_STATIC_BUCKET_NAME}/"
+
+MEDIA_URL = MINIO_STORAGE_MEDIA_URL
+STATIC_URL = MINIO_STORAGE_STATIC_URL
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
