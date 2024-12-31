@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 from environs import Env
@@ -46,12 +47,15 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'core',
+    'users',
 ]
 
 THIRD_PARTY_APPS = [
     'corsheaders',
+    'djoser',
     'drf_spectacular',
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 INSTALLED_APPS  = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -147,9 +151,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20,
 }
 
@@ -172,3 +177,29 @@ SPECTACULAR_SETTINGS = {
         'persistAuthorization': True,
     },
 }
+
+AUTH_USER_MODEL = 'users.User'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=15),
+}
+
+
+DOMAIN = env.str('DOMAIN', default='localhost:8000')
+SITE_NAME = env.str('SITE_NAME', default='cozy')
+SITE_ID = env.int("SITE_ID", default=1)
+
+DJOSER = {
+    'ACTIVATION_URL': 'users/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'users/password-reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+}
+
+EMAIL_BACKEND = env.str('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = env.str('EMAIL_HOST', default='localhost')
+EMAIL_PORT = env.int('EMAIL_PORT', default=625)
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = DOMAIN
