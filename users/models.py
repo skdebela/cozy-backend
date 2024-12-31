@@ -1,10 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-SEX_CHOICES = {
-    ('male', 'Male'),
-    ('female', 'Female')
-}
+SEX_CHOICES = {("male", "Male"), ("female", "Female")}
 
 
 class User(AbstractUser):

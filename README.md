@@ -11,6 +11,8 @@ This repository contains the **backend** implementation of the project, built wi
 
 ## Features
 
+- **User Authentication**: Sign up, log in, and manage accounts.
+
 ---
 
 ## Technologies
