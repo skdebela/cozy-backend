@@ -15,6 +15,13 @@ This repository contains the **backend** implementation of the project, built wi
 
 ## Technologies
 
+- **Backend**:
+  - Django REST Framework (DRF): For building the API.
+  - PostgreSQL: Database for managing application data.
+- **Development Tools**:
+  - `uv`: For dependency management.
+  - Docker: For containerized development and deployment.
+
 ---
 
 ## Getting Started
@@ -35,28 +42,36 @@ This repository contains the **backend** implementation of the project, built wi
    cd cozy-backend
    ```
 
-2. **Install Dependencies**:
+1. **Install Dependencies**:
 
    ```bash
    uv sync
    ```
 
-3. **Configure Environment Variables**:
+1. **Install Pre-Commit Hook** *(for contributors)*:
+
+   To ensure code quality and consistency, install the pre-commit hook for `ruff` checks by running:
+
+   ```bash
+   pre-commit install
+   ```
+
+1. **Configure Environment Variables**:
    Create a `.env` file in the project root to set environment variables, you can follow the provided template `.env_template`:
 
-4. **Run Migrations**:
+1. **Run Migrations**:
 
    ```bash
    uv run python manage.py migrate
    ```
 
-5. **Start the Development Server**:
+1. **Start the Development Server**:
 
    ```bash
    uv run python manage.py runserver
    ```
 
-6. **Access the API**:
+1. **Access the API**:
    Visit [http://localhost:8000/](http://localhost:8000/) in your browser or API client.
 
 ---
