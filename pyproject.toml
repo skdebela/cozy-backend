@@ -8,13 +8,12 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "pre-commit>=4.0.1",
     "ruff>=0.8.4",
 ]
 
 [tool.ruff]
 line-length = 120
-
-[tool.ruff.lint]
 select = [
     # pycodestyle
     "E",
