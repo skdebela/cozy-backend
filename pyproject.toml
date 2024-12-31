@@ -1,0 +1,38 @@
+[project]
+name = "cozy"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Samuel M. Debela", email = "113627346+skdebela@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "ruff>=0.8.4",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    "W",
+    # pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bandit
+    "S",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+ignore = [
+    # bandit: user of `assert` detected
+    "S101",
+]
